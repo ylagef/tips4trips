@@ -1,0 +1,74 @@
+{% extends "views/skeleton.html" %}
+{% block content %}
+
+<!-- CENTRAL JUMBOTRON -->
+<div class="jumbotron jumbotron-fluid rounded">
+    <div class="container">
+        <h1 class="display-4">
+            ¡Imagina tu viaje!
+        </h1>
+        <p class="lead">
+            Pero primero... Dinos unos detalles:
+        </p>
+
+        <hr class="my-4">
+
+        <form class="form" action="/trips/add" method="post">
+            <div>
+                <label>
+                    ¿A dónde quieres ir?
+                </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="material-icons">
+                                place
+                            </i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Lugar deseado" name="place">
+                </div>
+            </div>
+            <div class="col-md-12 dates">
+                <div class="col-md-6 date start">
+                    <label>
+                        ¿Cuándo te vas?
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="material-icons">
+                                    place
+                                </i>
+                            </div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Fecha de inicio" name="start">
+                    </div>
+                </div>
+                <div class="col-md-6 date end">
+                    <label>
+                        ¿Cuándo vuelves?
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="material-icons">
+                                    place
+                                </i>
+                            </div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Fecha de vuelta" name="end">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row  text-center">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-outline-secondary submit-button">Crear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

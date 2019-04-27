@@ -1,0 +1,87 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+  - url: /
+    script: handlers.index.app
+
+  - url: /templates
+    static_dir: templates
+    application_readable: true
+
+  - url: /resources
+    static_dir: resources
+
+  - url: /trips/manage
+    script: handlers.trips.manage.app
+    login: required
+
+  - url: /trips/add
+    script: handlers.trips.add.app
+    login: required
+
+    #  - url: /error
+    #    script: handlers.error.app
+    #
+    #  - url: /info
+    #    script: handlers.info.app
+    #
+    #  - url: /report
+    #    script: handlers.report.app
+    #    login: admin
+    #
+    #  - url: /manage_users
+    #    script: handlers.manage_users.app
+    #    login: required
+    #
+    #  - url: /users/add
+    #    script: handlers.users.add.app
+    #    login: required
+    #
+    #  - url: /users/modify
+    #    script: handlers.users.modify.app
+    #    login: required
+    #
+    #  - url: /users/delete
+    #    script: handlers.users.delete.app
+    #    login: required
+    #
+    #  - url: /manage_tickets
+    #    script: handlers.manage_tickets.app
+    #    login: required
+    #
+    #  - url: /tickets/chk
+    #    script: handlers.tickets.chk.app
+    #    login: required
+    #
+    #  - url: /tickets/add
+    #    script: handlers.tickets.add.app
+    #    login: required
+    #
+    #  - url: /tickets/toner
+    #    script: handlers.tickets.toner.app
+    #    login: required
+    #
+    #  - url: /tickets/modify
+    #    script: handlers.tickets.modify.app
+    #    login: required
+    #
+    #  - url: /tickets/delete
+    #    script: handlers.tickets.delete.app
+    #    login: required
+    #
+    #  - url: /tickets/toner_report
+    #    script: handlers.tickets.toner_report.app
+    #    login: required
+    #
+    #  - url: /_ah/mail/.+
+    #    script: handlers.manage_incoming_email.app
+    #    login: admin
+
+
+libraries:
+  - name: webapp2
+    version: "2.5.2"
+  - name: jinja2
+    version: latest
