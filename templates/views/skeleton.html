@@ -38,11 +38,13 @@
     <div class="btn-group" role="group">
         {% if user_info.nick=='Login' %}
         <a href="{{access_link}}">
-            <button class="btn btn-outline-secondary btn-sm" type="button">Login</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button">Iniciar sesión</button>
         </a>
         {% else %}
         <a href="{{access_link}}">
-            <button class="btn btn-outline-secondary btn-sm" type="button">Logout</button>
+            <button class="btn btn-outline-secondary btn-sm logout" type="button">
+                <span>{{user_info.email}}</span>
+            </button>
         </a>
         {% endif %}
     </div>

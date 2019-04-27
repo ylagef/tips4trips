@@ -54,3 +54,16 @@ form {
 a:hover {
     color: #e9ecef;
 }
+
+button.logout {
+    width: 16em
+}
+
+
+button:hover.logout span {
+    display: none
+}
+
+button.logout:hover:before {
+    content: "Cerrar sesión"
+}
