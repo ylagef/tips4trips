@@ -3,13 +3,22 @@
 
 <head>
     <meta charset="utf-8"/>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/templates/styles/styles.css">
+
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
     <title>{{ info.Name }}</title>
 </head>
 
@@ -22,13 +31,25 @@
         {% if user_info.nick!='Login' %}
         <ul class="navbar-nav mr-auto center">
             <li class="nav-item active"></li>
+            {% if section=='newTrip' %}
+            <li class="nav-item active">
+                {% else %}
             <li class="nav-item">
+                {% endif %}
                 <a class="nav-link" href="/trips/add">Nuevo viaje</a>
             </li>
+            {% if section=='manage' %}
+            <li class="nav-item active">
+                {% else %}
             <li class="nav-item">
+                {% endif %}
                 <a class="nav-link" href="/trips/manage">Gestionar mis viajes</a>
             </li>
+            {% if section=='browse' %}
+            <li class="nav-item active">
+                {% else %}
             <li class="nav-item">
+                {% endif %}
                 <a class="nav-link" href="/trips/browse">Buscar viajes</a>
             </li>
         </ul>

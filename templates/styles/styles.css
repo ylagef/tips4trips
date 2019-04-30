@@ -14,6 +14,8 @@
 .jumbotron {
     width: 50%;
     margin: 30px auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .centered-button {
@@ -59,11 +61,39 @@ button.logout {
     width: 16em
 }
 
-
 button:hover.logout span {
     display: none
 }
 
 button.logout:hover:before {
     content: "Cerrar sesión"
+}
+
+.action-buttons {
+    width: 8rem;
+}
+
+.input-amount {
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-backdrop {
+    background-color: #6c757d;
+    opacity: .8;
+}
+
+.modal-dialog {
+    max-width: none;
+    width: 50%;
+}
+
+#myInput {
+    width: 50%;
+    margin: 1rem auto;
+}
+
+.no-size {
+    width: 0;
 }

@@ -20,9 +20,3 @@ indexes:
   - name: email
   - name: added
     direction: desc
-
-- kind: User
-  properties:
-  - name: level
-  - name: added
-    direction: desc

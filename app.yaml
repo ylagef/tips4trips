@@ -10,9 +10,6 @@ handlers:
     static_dir: templates
     application_readable: true
 
-  - url: /resources
-    static_dir: resources
-
   - url: /trips/manage
     script: handlers.trips.manage.app
     login: required
@@ -20,6 +17,19 @@ handlers:
   - url: /trips/add
     script: handlers.trips.add.app
     login: required
+
+  - url: /trips/browse
+    script: handlers.trips.browse.app
+    login: required
+
+  - url: /trips/delete
+    script: handlers.trips.delete.app
+    login: required
+
+  - url: /trips/collaborate
+    script: handlers.trips.collaborate.app
+    login: required
+
 
 libraries:
   - name: webapp2

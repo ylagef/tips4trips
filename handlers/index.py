@@ -22,7 +22,8 @@ class WelcomePage(webapp2.RequestHandler):
         template_values = {
             "info": AppInfo,
             "user_info": user_info,
-            "access_link": access_link
+            "access_link": access_link,
+            "section": "none"
         }
 
         jinja = jinja2.get_jinja2(app=self.app)

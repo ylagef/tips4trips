@@ -23,6 +23,7 @@ class TripAdd(webapp2.RequestHandler):
                 "user_info": user_info,
                 "access_link": access_link,
                 "Level": User.Level,
+                "section": "newTrip"
             }
 
             jinja = jinja2.get_jinja2(app=self.app)

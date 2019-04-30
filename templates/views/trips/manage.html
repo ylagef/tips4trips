@@ -10,8 +10,6 @@
             ¡Sigue así y no recordarás ni de dónde vienes!
         </p>
 
-        <hr class="my-4">
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
@@ -23,6 +21,9 @@
                             </th>
                             <th scope="col">
                                 Recaudación
+                            </th>
+                            <th scope="col">
+                                Acciones
                             </th>
                         </tr>
                         </thead>
@@ -36,31 +37,81 @@
                             </th>
                             <th scope="row">
                                 <p class="font-weight-light">
-                                    {{trip.collectedAmount}} €
+                                    {{trip.collectedAmount}}€
                                 </p>
                             </th>
-                            <td>
-                                <a href="/trips/view/{{trip.key.id()}}">
-                                    <button class="btn btn-outline-info btn-sm text-uppercase action-button">
-                                        <i class="material-icons ">
-                                            remove_red_eye
-                                        </i>
-                                    </button>
-                                </a>
-                                <a href="/trips/edit/{{trip.key.id()}}">
-                                    <button class="btn btn-outline-warning btn-sm text-uppercase action-button">
-                                        <i class="material-icons ">
-                                            edit
-                                        </i>
-                                    </button>
-                                </a>
-                                <a href="/trips/delete/{{trip.key.id()}}">
-                                    <button class="btn btn-outline-danger btn-sm text-uppercase action-button">
-                                        <i class="material-icons ">
-                                            delete
-                                        </i>
-                                    </button>
-                                </a>
+                            <td class="action-buttons">
+                                <button class="btn btn-outline-info btn-sm text-uppercase action-button"
+                                        data-target="#detailModal{{trip.key.id()}}" data-toggle="modal">
+                                    <i class="material-icons">
+                                        remove_red_eye
+                                    </i>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm text-uppercase action-button"
+                                        data-target="#deleteModal{{trip.key.id()}}" data-toggle="modal">
+                                    <i class="material-icons">
+                                        delete
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="modal" id="detailModal{{trip.key.id()}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title">Detalles de tu viaje a {{trip.place}}</h2>
+                                                <button class="close" data-dismiss="modal" type="button">&times;
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p class="lead">
+                                                    Ida el <b>{{trip.start}}</b> y vuelta el <b>{{trip.end}}</b>.
+                                                </p>
+                                                <p class="lead">
+                                                    <b>{{trip.collectedAmount}}€</b> recaudados!
+                                                </p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-outline-secondary" data-dismiss="modal"
+                                                        type="button">
+                                                    Cerrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal" id="deleteModal{{trip.key.id()}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title">¿Borramos el viaje a {{trip.place}}?</h2>
+                                                <button class="close" data-dismiss="modal" type="button">&times;
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p class="lead">
+                                                    Ida el {{trip.start}} y vuelta el {{trip.end}}.
+                                                </p>
+                                                <p class="lead">
+                                                    {{trip.collectedAmount}}€ recaudados!
+                                                </p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <a href="/trips/delete?trip_key={{trip.key.id()}}">
+                                                    <button class="btn btn-outline-danger" type="button">
+                                                        Borrar viaje
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -71,5 +122,6 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}

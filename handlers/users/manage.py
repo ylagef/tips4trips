@@ -30,6 +30,7 @@ class UsersManager(webapp2.RequestHandler):
                 "access_link": access_link,
                 "users": user_set,
                 "Level": User.Level,
+                "section": "manage"
             }
 
             jinja = jinja2.get_jinja2(app=self.app)
