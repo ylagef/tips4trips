@@ -67,7 +67,7 @@ class TripAdd(webapp2.RequestHandler):
                 self.redirect('/trips/add?message=e71b6b22d0ad2es5s945t76cve6v29af3')
 
 
-class TripsBrowser(webapp2.RequestHandler):
+class TripsBrowse(webapp2.RequestHandler):
     def get(self):
         message_type = ""
         message = ""
@@ -195,7 +195,7 @@ class TripsManager(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/trips/add', TripAdd),
-    ('/trips/browse', TripsBrowser),
+    ('/trips/browse', TripsBrowse),
     ('/trips/collaborate', TripCollaborate),
     ('/trips/delete', TripDelete),
     ('/trips/manage', TripsManager)
