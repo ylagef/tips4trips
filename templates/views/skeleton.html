@@ -23,57 +23,80 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-primary nav">
-    <a class="navbar-brand nav-title font-weight-bold">Tips4trips</a>
-
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        {% if user_info.nick!='Login' %}
-        <ul class="navbar-nav mr-auto center">
-            <li class="nav-item active"></li>
-            {% if section=='newTrip' %}
-            <li class="nav-item active">
-                {% else %}
-            <li class="nav-item">
-                {% endif %}
-                <a class="nav-link" href="/trips/add">Nuevo viaje</a>
-            </li>
-            {% if section=='manage' %}
-            <li class="nav-item active">
-                {% else %}
-            <li class="nav-item">
-                {% endif %}
-                <a class="nav-link" href="/trips/manage">Gestionar mis viajes</a>
-            </li>
-            {% if section=='browse' %}
-            <li class="nav-item active">
-                {% else %}
-            <li class="nav-item">
-                {% endif %}
-                <a class="nav-link" href="/trips/browse">Buscar viajes</a>
-            </li>
-        </ul>
+{% if message_type %}}
+{% if message_type=="error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {% elif message_type=="success" %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         {% endif %}
-    </div>
+        <strong class="text-capitalize">¡{{message_type}}!</strong> {{message}}
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
 
-    <div class="btn-group" role="group">
-        {% if user_info.nick=='Login' %}
-        <a href="{{access_link}}">
-            <button class="btn btn-outline-secondary btn-sm" type="button">Iniciar sesión</button>
-        </a>
-        {% else %}
-        <a href="{{access_link}}">
-            <button class="btn btn-outline-secondary btn-sm logout" type="button">
-                <span>{{user_info.email}}</span>
-            </button>
-        </a>
-        {% endif %}
     </div>
-</nav>
+    {% endif %}
 
-{% block content %}
-<!-- Here it goes the injected code -->
-{% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary nav">
+        <a class="navbar-brand nav-title font-weight-bold">Tips4trips</a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if user_email != '' %}
+            <ul class="navbar-nav mr-auto center">
+                {% if section=='manage' %}
+                <li class="nav-item active">
+                    {% else %}
+                <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/trips/manage">My trips</a>
+                </li>
+
+                {% if section=='browse' %}
+                <li class="nav-item active">
+                    {% else %}
+                <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/trips/browse">Browse trips</a>
+                </li>
+
+                {% if section=='newTrip' %}
+                <li class="nav-item active">
+                    {% else %}
+                <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/trips/add">New trip</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="btn-group" role="group">
+            {% if user_email != '' %}
+            <a href="{{access_link}}">
+                <button class="btn btn-outline-secondary btn-sm logout" type="button">
+                    <span>{{user_email}}</span>
+                </button>
+            </a>
+            {% else %}
+            <a href="{{access_link}}">
+                <button class="btn btn-outline-secondary btn-sm" type="button">Login</button>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}
+    <!-- Here it goes the injected code -->
+    {% endblock %}
 
 </body>
 </html>
+
+<script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+</script>

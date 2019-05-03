@@ -4,12 +4,12 @@
 <div class="jumbotron jumbotron-fluid rounded">
     <div class="container">
         <h1 class="display-4">
-            Mis viajes
+            My trips
         </h1>
         <p class="lead">
-            ¡Sigue así y no recordarás ni de dónde vienes!
+            If you continue like that... You'll no longer remember from where you came from!
         </p>
-
+        {% if trips %}
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
@@ -17,29 +17,25 @@
                         <thead>
                         <tr>
                             <th scope="col">
-                                Destino
+                                Place
                             </th>
                             <th scope="col">
-                                Recaudación
+                                Collection
                             </th>
                             <th scope="col">
-                                Acciones
+                                Actions
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for trip in trips %}
                         <tr>
-                            <th scope="row" class="font-weight-normal">
-                                <p>
-                                    {{trip.place}}
-                                </p>
-                            </th>
-                            <th scope="row">
-                                <p class="font-weight-light">
-                                    {{trip.collectedAmount}}€
-                                </p>
-                            </th>
+                            <td class="font-weight-normal">
+                                {{trip.place}}
+                            </td>
+                            <td class="font-weight-light">
+                                {{trip.collectedAmount}}€
+                            </td>
                             <td class="action-buttons">
                                 <button class="btn btn-outline-info btn-sm text-uppercase action-button"
                                         data-target="#detailModal{{trip.key.id()}}" data-toggle="modal">
@@ -54,31 +50,69 @@
                                     </i>
                                 </button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
+                            <td>
                                 <div class="modal" id="detailModal{{trip.key.id()}}">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content info-modal">
                                             <div class="modal-header">
-                                                <h2 class="modal-title">Detalles de tu viaje a {{trip.place}}</h2>
+                                                <h2 class="modal-title">Details of the trip to {{trip.place}}</h2>
                                                 <button class="close" data-dismiss="modal" type="button">&times;
                                                 </button>
                                             </div>
 
                                             <div class="modal-body">
                                                 <p class="lead">
-                                                    Ida el <b>{{trip.start}}</b> y vuelta el <b>{{trip.end}}</b>.
+                                                    Going on <b>{{trip.start}}</b> and return on <b>{{trip.end}}</b>.
                                                 </p>
                                                 <p class="lead">
-                                                    <b>{{trip.collectedAmount}}€</b> recaudados!
+                                                    <b>{{trip.collectedAmount}}€</b> collected!
                                                 </p>
+
+                                                <hr class="my-4">
+
+                                                {% if collaborations[trip.key.id()] %}
+
+                                                <h3>Collaborations history:</h3>
+
+                                                <table class="table text-center history">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            Date
+                                                        </th>
+                                                        <th scope="col">
+                                                            User
+                                                        </th>
+                                                        <th scope="col">
+                                                            Amount
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for c in collaborations[trip.key.id()]: %}
+                                                    <tr>
+                                                        <td>
+                                                            {{c.date}}
+                                                        </td>
+                                                        <td>
+                                                            {% print(c.user.split("@")[0]) %}
+                                                        </td>
+                                                        <td>
+                                                            {{c.amount}}€
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {% else %}
+                                                <h3>No collaborations yet!</h3>
+                                                {% endif%}
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button class="btn btn-outline-secondary" data-dismiss="modal"
+                                                <button class="btn btn-outline-info" data-dismiss="modal"
                                                         type="button">
-                                                    Cerrar
+                                                    Close
                                                 </button>
                                             </div>
                                         </div>
@@ -86,28 +120,29 @@
                                 </div>
                                 <div class="modal" id="deleteModal{{trip.key.id()}}">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content delete-modal">
                                             <div class="modal-header">
-                                                <h2 class="modal-title">¿Borramos el viaje a {{trip.place}}?</h2>
+                                                <h2 class="modal-title">Are you sure to delete the {{trip.place}}
+                                                    trip?</h2>
                                                 <button class="close" data-dismiss="modal" type="button">&times;
                                                 </button>
                                             </div>
 
                                             <div class="modal-body">
                                                 <p class="lead">
-                                                    Ida el {{trip.start}} y vuelta el {{trip.end}}.
+                                                    Going on {{trip.start}} and return on {{trip.end}}.
                                                 </p>
                                                 <p class="lead">
-                                                    {{trip.collectedAmount}}€ recaudados!
+                                                    {{trip.collectedAmount}}€ collected!
                                                 </p>
                                             </div>
 
                                             <div class="modal-footer">
-                                                <a href="/trips/delete?trip_key={{trip.key.id()}}">
-                                                    <button class="btn btn-outline-danger" type="button">
-                                                        Borrar viaje
+                                                <form action="/trips/delete?trip_key={{trip.key.id()}}" method="post">
+                                                    <button class="btn btn-outline-danger" type="submit">
+                                                        Delete trip
                                                     </button>
-                                                </a>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -120,8 +155,20 @@
                 </div>
             </div>
         </div>
+        {% else %}
+
+        <hr class="my-4">
+
+        <p class="lead text-center">You don't have trips yet!</p>
+        <div class="text-center add-new">
+            <a href="/trips/add">
+                <button class="btn btn-outline-info" type="button">
+                    Add new trip
+                </button>
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>
-
 
 {% endblock %}

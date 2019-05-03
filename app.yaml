@@ -30,6 +30,10 @@ handlers:
     script: handlers.trips.collaborate.app
     login: required
 
+  - url: /error/.*
+    script: handlers.error.app
+    login: required
+
 
 libraries:
   - name: webapp2

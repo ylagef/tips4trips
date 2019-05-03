@@ -10,13 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-- kind: Trip
+  - kind: Collaboration
+    properties:
+      - name: trip_key
+      - name: date
+
+  - kind: Trip
   properties:
   - name: owner
   - name: start
-
-- kind: User
-  properties:
-  - name: email
-  - name: added
-    direction: desc

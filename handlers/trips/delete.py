@@ -1,42 +1,24 @@
 import webapp2
-from google.appengine.api import users
 from google.appengine.ext import ndb
-from webapp2_extras import jinja2
 
-import models.user as user_mgt
-from models.appinfo import AppInfo
+from models.collaboration import Collaboration
 from models.trip import Trip
-from models.user import User
 
 
 class TripDelete(webapp2.RequestHandler):
 
-    def get(self):
-        trip_key = self.request.get("trip_key")
+    def post(self):
+        # Get related collaborations
+        collaborations = list(Collaboration.query(Collaboration.trip_key == int(self.request.get("trip_key"))))
 
-        user = users.get_current_user()
-        user_info = user_mgt.retrieve(user)
+        # Delete collaborations
+        for c in collaborations:
+            ndb.Key(Collaboration, int(c.key.id())).delete()
 
-        if user and user_info:
-            access_link = users.create_logout_url("/")
+        # Delete wanted trip
+        ndb.Key(Trip, int(self.request.get("trip_key"))).delete()
 
-            # Delete wanted trip
-            ndb.Key(Trip, int(self.request.get("trip_key"))).delete()
-
-            # Retrieve trips after deletion
-            trips = Trip.query(Trip.owner == user_info.email).order(Trip.start)
-
-            template_values = {
-                "info": AppInfo,
-                "user_info": user_info,
-                "access_link": access_link,
-                "Level": User.Level,
-                "trips": trips,
-                "section": "manage"
-            }
-
-            jinja = jinja2.get_jinja2(app=self.app)
-            self.response.write(jinja.render_template("views/trips/manage.html", **template_values))
+        self.redirect("/trips/manage?message=dc5552978b5eea6cbc607611e7f4025b")
 
 
 app = webapp2.WSGIApplication([('/trips/delete', TripDelete), ], debug=True)

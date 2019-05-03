@@ -66,7 +66,7 @@ button:hover.logout span {
 }
 
 button.logout:hover:before {
-    content: "Cerrar sesión"
+    content: "Logout"
 }
 
 .action-buttons {
@@ -96,4 +96,37 @@ button.logout:hover:before {
 
 .no-size {
     width: 0;
+}
+
+.info-modal {
+    border-color: #17a2b8;
+}
+
+.delete-modal {
+    border-color: #dc3545;
+}
+
+.collaborate-modal {
+    border-color: #28a745;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.history {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-new {
+    margin-top: 1rem;
+}
+
+.alert {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
 }

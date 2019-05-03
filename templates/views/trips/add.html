@@ -5,10 +5,10 @@
 <div class="jumbotron jumbotron-fluid rounded">
     <div class="container">
         <h1 class="display-4">
-            ¡Imagina tu viaje!
+            Imagine your trip!
         </h1>
         <p class="lead">
-            Pero primero... Dinos unos detalles:
+            But first... Tell us some details...
         </p>
 
         <hr class="my-4">
@@ -16,7 +16,7 @@
         <form class="form" action="/trips/add" method="post">
             <div>
                 <label>
-                    ¿A dónde quieres ir?
+                    Where?
                 </label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -26,49 +26,65 @@
                             </i>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Lugar deseado" name="place">
+                    <input class="form-control" name="place" placeholder="Desired place" type="text">
                 </div>
             </div>
             <div class="col-md-12 dates">
                 <div class="col-md-6 date start">
                     <label>
-                        ¿Cuándo te vas?
+                        When are u goin'?
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="material-icons">
-                                    place
+                                    today
                                 </i>
                             </div>
                         </div>
-                        <input type="date" class="form-control" placeholder="Fecha de inicio" name="start">
+                        <input class="form-control" id="startdate" name="start" placeholder="Start date"
+                               type="date">
                     </div>
                 </div>
                 <div class="col-md-6 date end">
                     <label>
-                        ¿Cuándo vuelves?
+                        When are u back?
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="material-icons">
-                                    place
+                                    today
                                 </i>
                             </div>
                         </div>
-                        <input type="date" class="form-control" placeholder="Fecha de vuelta" name="end">
+                        <input class="form-control" id="enddate" name="end" placeholder="Return date" type="date">
                     </div>
                 </div>
             </div>
 
             <div class="form-group row  text-center">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-outline-secondary submit-button">Crear</button>
+                    <button class="btn btn-outline-secondary submit-button" type="submit">Create</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
+<!-- import moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script>
+    (function () {
+        $('#startdate').attr('min', moment().format('YYYY-MM-DD'));
+        $('#enddate').attr('disabled', true);
+
+        $('#startdate').on('change', function () {
+            var startDate = $(this).val();
+            var endDate = moment(startDate).add(1, 'days').format('YYYY-MM-DD');
+            $('#enddate').attr('disabled', false);
+            $('#enddate').attr('min', endDate);
+        })
+    })()
+</script>
 {% endblock %}

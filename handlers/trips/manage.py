@@ -2,36 +2,51 @@ import webapp2
 from google.appengine.api import users
 from webapp2_extras import jinja2
 
-import models.user as user_mgt
 from models.appinfo import AppInfo
+from models.collaboration import Collaboration
+from models.message import Message
 from models.trip import Trip
-from models.user import User
 
 
 class TripsManager(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        user_info = user_mgt.retrieve(user)
+        user_email = user.email()
 
-        if user and user_info:
-            access_link = users.create_logout_url("/")
+        message_type = ""
+        message = ""
+        message_code = self.request.get("message")
 
-            trips = Trip.query(Trip.owner == user_info.email).order(Trip.start)
+        if message_code:
+            if message_code.__contains__("e"):
+                message_type = "error"
+            else:
+                message_type = "success"
+            message = Message.message[message_code]
 
-            template_values = {
-                "info": AppInfo,
-                "user_info": user_info,
-                "access_link": access_link,
-                "Level": User.Level,
-                "trips": trips,
-                "section": "manage"
-            }
+        access_link = users.create_logout_url("/")
 
-            jinja = jinja2.get_jinja2(app=self.app)
-            self.response.write(jinja.render_template("views/trips/manage.html", **template_values))
-        else:
-            self.redirect("/")
-            return
+        trips = list(Trip.query(Trip.owner == user_email).order(Trip.start))
+
+        all_collaborations = dict()
+        for t in trips:
+            trip_collaborations = list(
+                Collaboration.query(Collaboration.trip_key == t.key.id()).order(Collaboration.date))
+            all_collaborations[t.key.id()] = trip_collaborations
+
+        template_values = {
+            "info": AppInfo,
+            "user_email": user_email,
+            "access_link": access_link,
+            "trips": trips,
+            "section": "manage",
+            "collaborations": all_collaborations,
+            "message_type": message_type,
+            "message": message
+        }
+
+        jinja = jinja2.get_jinja2(app=self.app)
+        self.response.write(jinja.render_template("views/trips/manage.html", **template_values))
 
 
 app = webapp2.WSGIApplication([('/trips/manage', TripsManager), ], debug=True)

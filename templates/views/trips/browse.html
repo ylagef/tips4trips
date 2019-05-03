@@ -4,34 +4,35 @@
 <div class="jumbotron jumbotron-fluid rounded">
     <div class="container">
         <h1 class="display-4">
-            Todos los viajes
+            All trips
         </h1>
         <p class="lead">
-            ¡Colabora con la comunidad!
+            Collaborate with the community!
         </p>
 
         <div class="row">
             <div class="col-lg-12">
+                {% if trips %}
                 <div class="table-responsive">
-                    <input class="form-control" id="myInput" placeholder="Filtrar viajes..." type="text">
+                    <input class="form-control" id="myInput" placeholder="Filter..." type="text">
 
                     <table class="table text-center">
                         <thead>
                         <tr>
                             <th scope="col">
-                                Usuario
+                                User
                             </th>
                             <th scope="col">
-                                Destino
+                                Place
                             </th>
                             <th scope="col">
-                                Inicio
+                                Start date
                             </th>
                             <th scope="col">
-                                Fin
+                                End date
                             </th>
                             <th scope="col">
-                                Colaborar
+                                Collaborate
                             </th>
                             <th class="no-size" scope="col"></th>
                         </tr>
@@ -39,26 +40,18 @@
                         <tbody id="myTable">
                         {% for trip in trips %}
                         <tr>
-                            <th class="font-weight-normal" scope="row">
-                                <p>
-                                    {% print(trip.owner.split("@")[0]) %}
-                                </p>
-                            </th>
-                            <th class="font-weight-normal" scope="row">
-                                <p>
-                                    {{trip.place}}
-                                </p>
-                            </th>
-                            <th scope="row">
-                                <p class="font-weight-light">
-                                    {{trip.start}}
-                                </p>
-                            </th>
-                            <th scope="row">
-                                <p class="font-weight-light">
-                                    {{trip.end}}
-                                </p>
-                            </th>
+                            <td class="font-weight-normal" scope="row">
+                                {% print(trip.owner.split("@")[0]) %}
+                            </td>
+                            <td class="font-weight-normal" scope="row">
+                                {{trip.place}}
+                            </td>
+                            <td class="font-weight-light" scope="row">
+                                {{trip.start}}
+                            </td>
+                            <td class="font-weight-light" scope="row">
+                                {{trip.end}}
+                            </td>
                             <td>
                                 <button class="btn btn-outline-success btn-sm text-uppercase action-button"
                                         data-target="#colaborateModal{{trip.key.id()}}" data-toggle="modal">
@@ -70,27 +63,28 @@
                             <td class="no-size">
                                 <div class="modal" id="colaborateModal{{trip.key.id()}}">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content collaborate-modal">
                                             <div class="modal-header">
-                                                <h2 class="modal-title">Colaborar para el viaje a {{trip.place}}</h2>
+                                                <h2 class="modal-title">Collaborate with the travel to
+                                                    {{trip.place}}</h2>
                                                 <button class="close" data-dismiss="modal" type="button">&times;
                                                 </button>
                                             </div>
                                             <form action="/trips/collaborate" method="post">
                                                 <div class="modal-body">
                                                     <p class="lead">
-                                                        Ida el <b>{{trip.start}}</b> y vuelta el <b>{{trip.end}}</b>.
+                                                        Going on <b>{{trip.start}}</b> and back on <b>{{trip.end}}</b>.
                                                     </p>
 
                                                     <p class="lead">
-                                                        <b>{{trip.collectedAmount}}€</b> recaudados hasta ahora!
+                                                        <b>{{trip.collectedAmount}}€</b> collected until now.
                                                     </p>
 
                                                     <div class="input-group mb-3 input-amount">
 
-                                                        <input aria-label="Cantidad" class="form-control"
-                                                               name="amount" placeholder="Cantidad"
-                                                               type="number">
+                                                        <input class="form-control"
+                                                               name="amount" placeholder="Amount"
+                                                               required type="number">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">€</span>
                                                         </div>
@@ -102,7 +96,7 @@
 
                                                 <div class="modal-footer">
                                                     <button class="btn btn-outline-success" type="submit">
-                                                        Colaborar
+                                                        Collaborate
                                                     </button>
                                                 </div>
                                             </form>
@@ -115,6 +109,18 @@
                         </tbody>
                     </table>
                 </div>
+                {% else %}
+                <hr class="my-4">
+
+                <p class="lead text-center">No trips yet!</p>
+                <div class="text-center add-new">
+                    <a href="/trips/add">
+                        <button class="btn btn-outline-info" type="button">
+                            Add new trip
+                        </button>
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
