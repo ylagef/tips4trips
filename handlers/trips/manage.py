@@ -17,12 +17,13 @@ class TripsManager(webapp2.RequestHandler):
         message = ""
         message_code = self.request.get("message")
 
-        if message_code:
-            if message_code.__contains__("e"):
+        if message_code and Message.message.__contains__(message_code):
+            message = Message.message[message_code]
+
+            if message_code.startswith("e"):
                 message_type = "error"
             else:
                 message_type = "success"
-            message = Message.message[message_code]
 
         access_link = users.create_logout_url("/")
 

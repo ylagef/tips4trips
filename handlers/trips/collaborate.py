@@ -10,9 +10,9 @@ class TripCollaborate(webapp2.RequestHandler):
     def post(self):
         new_amount = self.request.get("amount")
         if new_amount == "":
-            self.redirect("/trips/browse?message=d0a1033d7809c256156d8bf0eb4673de")
+            self.redirect("/trips/browse?message=ed0a1033d7809c256156d8bf0eb4673de")
         elif not new_amount.isdigit():
-            self.redirect("/trips/browse?message=4fcba5c5c609b4800a1fa6513ba42bd8")
+            self.redirect("/trips/browse?message=e4fcba5c5c609b4800a1fa6513ba42bd8")
         else:
             new_amount = int(new_amount)
             # Update wanted trip
