@@ -146,9 +146,9 @@ class TripDelete(webapp2.RequestHandler):
 
             # Delete wanted trip
             if ndb.Key(Trip, int(self.request.get("trip_key"))).delete():
-                self.redirect("/trips/manage?message=sdc5552978b5eea6cbc607611e7f4025b")
-            else:
                 self.redirect("/trips/manage?message=e55b6b2240ad2e55s9453t765v6v29a53")
+            else:
+                self.redirect("/trips/manage?message=sdc5552978b5eea6cbc607611e7f4025b")
 
 
 class TripsManager(webapp2.RequestHandler):
