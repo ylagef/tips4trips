@@ -10,24 +10,8 @@ handlers:
     static_dir: templates
     application_readable: true
 
-  - url: /trips/manage
-    script: handlers.trips.manage.app
-    login: required
-
-  - url: /trips/add
-    script: handlers.trips.add.app
-    login: required
-
-  - url: /trips/browse
-    script: handlers.trips.browse.app
-    login: required
-
-  - url: /trips/delete
-    script: handlers.trips.delete.app
-    login: required
-
-  - url: /trips/collaborate
-    script: handlers.trips.collaborate.app
+  - url: /trips/.*
+    script: handlers.trips.app
     login: required
 
   - url: /error/.*
