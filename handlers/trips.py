@@ -123,7 +123,7 @@ class TripCollaborate(webapp2.RequestHandler):
                                           user=users.get_current_user().email())
 
             if collaboration.put():
-                self.redirect("/trips/browse?message=e71c6824d014ee17a9dfc77cae0928af")
+                self.redirect("/trips/browse?message=se71c6824d014ee17a9dfc77cae0928af")
             else:
                 self.redirect("/trips/browse?message=e61b6b2d40ad234d5svd1f26v6d7y9a53")
 
